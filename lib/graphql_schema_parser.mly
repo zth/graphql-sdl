@@ -33,6 +33,7 @@ let rec has_duplicates = function
 %token MUTATION
 %token SUBSCRIPTION
 %token TYPE
+%token DIRECTIVE
 %token INPUT
 %token ENUM
 %token UNION
@@ -72,6 +73,7 @@ definition:
   | enum_definition
   | union_definition
   | interface_definition
+  | directive_definition
   | scalar_definition
   | schema_definition { $1 }
 
@@ -105,6 +107,16 @@ input_type_definition:
         directives = $4;
         description = $1;
         interfaces = None
+      }
+    }
+
+directive_definition:
+  | optional_description DIRECTIVE AT name ON directive_targets
+    {
+      Directive {
+        name = $4;
+        on = $6;
+        description = $1;
       }
     }
 
@@ -193,6 +205,11 @@ union_vals:
   | name PIPE union_vals
   { {name = $1; description = None} :: $3 }
 
+directive_targets:
+  | name  { [ {name = $1; description = None} ] }
+  | name PIPE directive_targets
+  { {name = $1; description = None} :: $3 }
+
 enum_vals:
   | LBRACE enum_value_decl+ RBRACE { $2 }
 
@@ -239,11 +256,22 @@ enum_value:
   | keyword_name
   | NAME { $1 }
 
+directive_on:
+  | keyword_name
+  | NAME { $1 }
+
 enum_value_decl:
   | optional_description enum_value {
     {
       name = $2;
       description = $1;
+    }
+  }
+
+directive_on_decl:
+  | directive_on {
+    {
+      name = $1;
     }
   }
 

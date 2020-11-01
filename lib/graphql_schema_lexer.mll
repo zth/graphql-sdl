@@ -39,6 +39,7 @@ rule token = parse
   | "implements"   { IMPLEMENTS }
   | "scalar"       { SCALAR }
   | "schema"       { SCHEMA }
+  | "directive"    { DIRECTIVE }
   | "query"        { QUERY }
   | "mutation"     { MUTATION }
   | "subscription" { SUBSCRIPTION }

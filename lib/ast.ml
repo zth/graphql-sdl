@@ -46,6 +46,12 @@ type scalar_definition =
   ; description : string option
   }
 
+type directive_definition =
+  { name : string
+  ; on : string list
+  ; description : string option
+  }
+
 type schema_field =
   { typ : string
   ; name : string
@@ -59,6 +65,7 @@ type schema_definition =
 
 type optype =
   | InputType of schemaTyp
+  | Directive of directive_definition
   | Type of schemaTyp
   | Enum of enumTyp
   | Union of enumTyp
