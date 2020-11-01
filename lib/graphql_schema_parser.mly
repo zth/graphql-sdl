@@ -256,22 +256,11 @@ enum_value:
   | keyword_name
   | NAME { $1 }
 
-directive_on:
-  | keyword_name
-  | NAME { $1 }
-
 enum_value_decl:
   | optional_description enum_value {
     {
       name = $2;
       description = $1;
-    }
-  }
-
-directive_on_decl:
-  | directive_on {
-    {
-      name = $1;
     }
   }
 
