@@ -111,11 +111,12 @@ input_type_definition:
     }
 
 directive_definition:
-  | optional_description DIRECTIVE AT name ON directive_targets
+  | optional_description DIRECTIVE AT name default_list(arguments) ON directive_targets
     {
       Directive {
         name = $4;
-        on = $6;
+        on = $7;
+        arguments = $5;
         description = $1;
       }
     }
@@ -206,9 +207,9 @@ union_vals:
   { {name = $1; description = None} :: $3 }
 
 directive_targets:
-  | name  { [ {name = $1; description = None} ] }
+  | name  { [ $1 ] }
   | name PIPE directive_targets
-  { {name = $1; description = None} :: $3 }
+  { $1 :: $3 }
 
 enum_vals:
   | LBRACE enum_value_decl+ RBRACE { $2 }

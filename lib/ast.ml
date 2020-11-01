@@ -49,6 +49,7 @@ type scalar_definition =
 type directive_definition =
   { name : string
   ; on : string list
+  ; arguments : argument_definition list
   ; description : string option
   }
 
