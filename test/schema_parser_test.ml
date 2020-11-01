@@ -142,4 +142,9 @@ let tests =
     , fun () ->
         test_parser_printer_bidirectionality
           "type Foo { someThing(input: InputObj!): Query! }" )
+  ; ( "directive definitions"
+    , `Quick
+    , fun () ->
+        test_parser_printer_bidirectionality
+          "directive @deprecated(reason: String = \"No longer supported\", anotherArg: Boolean) on FIELD_DEFINITION | ENUM_VALUE" )
   ]
